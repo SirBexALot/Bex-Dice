@@ -1,0 +1,39 @@
+{{ block title }}
+Charity Page
+
+{{ endblock }}
+
+{{ block content}}
+<p> On this page you and your groupmates will enter the roll you saw on the previous page. <br>
+You must put the same number as your groupmates or the payout will be 0. <br>
+This page will automatically submit after 3 minutes. If it automatically submits you receive 0. <br>
+You will only be able to submit your number after 2 minutes.<br>
+You have a chat box to talk with your teammates about which number to report.</p>
+ <p>Remember your payout scheme </p>
+</script>
+<table>
+  <tr>
+    <th>Dice Roll </th>
+      <td>1</td> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td>
+      </tr>
+    <tr>
+    <th>Group</th>
+      <td>1000</td> <td>800</td> <td>600</td> <td>400</td> <td>200</td> <td>0</td>
+        </tr>
+    <th>Charity</th>
+      <td>0</td> <td>200</td> <td>400</td> <td>600</td> <td>800</td> <td>1000</td>
+    </table>
+{{ chat }}
+<div id="delayed_field" style="display: none;">
+    {{ formfields }}
+    {{ next_button }}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            document.getElementById('delayed_field').style.display = 'block';
+        }, 120000)
+    })
+</script>
+
+{{ endblock }}
