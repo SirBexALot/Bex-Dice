@@ -2,7 +2,7 @@
  Instructions
 {{ endblock }}
 {{ block content }}
-Please play the following audio recording of the instructions to move forward.
+<p>Please play the following audio recording of the instructions to move forward.</p>
 <audio controls> <source src="{{ static 'Instructions.m4a' }}"></audio>
 <script>
    const audio = document.querySelector('audio');
@@ -53,6 +53,5 @@ The payouts are as follows</p>
     </table>
 
     {{ formfields }}
-    {{ next_button }}
 
 {{ endblock }}

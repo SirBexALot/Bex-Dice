@@ -123,4 +123,4 @@ class PostSurvey(Page):
     form_fields = ['Age', 'Gender', 'School', 'Work_actual', "Work_hypo"]
 
 
-page_sequence = [Instructions, WaitingPage, RollWithIt, WaitingPage, RevPage, RevWaitPage, CharityPage, CharityWaitPage, Results, WaitingPage, PostSurvey]
+page_sequence = [Instructions, WaitingPage, RollWithIt, WaitingPage, RevPage, RevWaitPage, CharityPage, CharityWaitPage, Results, PostSurvey]
