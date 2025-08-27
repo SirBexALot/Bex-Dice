@@ -29,6 +29,7 @@ class Player(BasePlayer):
     rev_earn = models.CurrencyField() #otree liked payouts to be in currency.
     charity_earn = models.CurrencyField()
     charity = models.IntegerField()
+    total_charity = models.CurrencyField(initial=0)
     #This is all the PostSurvey questions. You can adjust the choices here, but if you want to change
     #the choices you need to change them here, in the PostSurvey page section and on the html page
     Age = models.IntegerField(label="Please choose your age range:", choices= [[1,'>18'], [2, '18-25'], [3, '25-35'], [4, '35-45'], [5, '45<'],])
@@ -149,15 +150,16 @@ class CharityWait(WaitPage):
                 p.charity = 10
             else:
                 p.charity_earn = p.charity_num*2
-                p.charity = 10-p.charity_num*2
+                p.charity = 10-(p.charity_num*2)
 
         for p in group.get_players():
-            if p.round_number == C.NUM_ROUNDS:
+            if p.round_number == 1:
                 p.payoff = p.rev_earn + p.charity_earn + C.show_up
-                p.charity += p.charity
+                p.total_charity = p.charity
             else:
                 p.payoff = p.rev_earn + p.charity_earn
-                p.charity += p.charity
+                previous_total = p.in_round(p.round_number-1).total_charity
+                p.total_charity = previous_total + p.charity
 
 
 class Results(Page):
@@ -180,3 +182,4 @@ class PostSurvey(Page):
 page_sequence = [Instructions, Waiting, Roll, RevPage, RevWait, CharityPage, CharityWait, Results, PostSurvey]
 #Charity page first
 #page_sequence = [Instructions, Waiting, Roll, CharityPage, CharityWait, RevPage, RevWait, Results, PostSurvey]
+#If you use this, you must also move the payoffs portion to the rev page wait page

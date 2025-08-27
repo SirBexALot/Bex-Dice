@@ -22,7 +22,7 @@ You will only be able to submit your number after 2 minutes.<br>
     </table>
 
 {{ chat }}
-<div id="delayed_field" style="display: none;">
+<!--<div id="delayed_field" style="display: none;">
     {{ formfields }}
     {{ next_button }}
 </div>
@@ -32,7 +32,8 @@ You will only be able to submit your number after 2 minutes.<br>
             document.getElementById('delayed_field').style.display = 'block';
         }, 120000)
     })
-</script>
+</script>-->
 <!--This will change how long the buttons are hidden for -->
-
+{{ formfields }}
+{{ next_button }}
 {{ endblock }}

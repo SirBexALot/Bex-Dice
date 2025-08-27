@@ -1,0 +1,40 @@
+{{ block title }}
+    Revenue Page
+{{ endblock }}
+{{ block content }}
+<section>
+<div class = left>Your roll is <br>
+<video width="100" height="100" controls muted autoplay> <source src="{{ static video_filename }}" type="video/mp4"> </video>
+  </div>
+    <div class="right"> {{ chat }} </div>
+<p>This will be your first roll which represents your company's revenue.<br>
+You will not be able to input a number for the first 2 minutes, discuss with your groupmates your choice. <br>
+    You only get one try to submit your numbers, again, if they do not match you will receive 0<br>
+</section>
+Remember your payout scheme.
+    <table>
+  <tr>
+    <th>Dice Roll 1</th>
+    <th>Payout</th>
+  </tr>
+  <tr> <td>1</td> <td>10</td> </tr>
+        <tr> <td>2</td> <td>20</td> </tr>
+          <tr> <td>3</td> <td>30</td> </tr>
+          <tr> <td>4</td> <td>40</td> </tr>
+        <tr> <td>5</td> <td>50</td> </tr>
+        <tr> <td>6</td> <td>0</td> </tr>
+    </table>
+
+<div id="delayed_field" style="display: none;">
+    {{ formfields }}
+    {{ next_button }}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            document.getElementById('delayed_field').style.display = 'block';
+        }, 120000)
+    })
+</script>
+
+{{ endblock }}

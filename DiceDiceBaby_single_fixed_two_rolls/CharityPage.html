@@ -1,0 +1,35 @@
+{{ block title }}
+Charity Page
+
+{{ endblock }}
+
+{{ block content}}
+<p>Your roll is:
+  {{ if player.round_number == 1 }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.1.mp4' }}" type="video/mp4"> </video>
+    {{ elif player.round_number == 2 }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.2.mp4' }}" type="video/mp4"> </video>
+    {{ elif player.round_number == 3 }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.3.mp4' }}" type="video/mp4"> </video>
+    {{ else }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.4.mp4' }}" type="video/mp4"> </video>
+    {{ endif }} <br>
+  This is your second roll which represents the amount you will share with charity. <br>
+This page will automatically submit after 1 minute. If it automatically submits you receive 0. <br>
+    Remember your payout scheme </p>
+</script>
+<table>
+  <tr>
+    <th>Dice Roll </th>
+      <td>1</td> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td>
+      </tr>
+    <tr>
+    <th>Your earn</th>
+      <td> 2</td> <td> 4 </td> <td> 6 </td> <td> 8 </td> <td> 10 </td> <td> 0 </td>
+        </tr>
+    <th>Charity earn</th>
+      <td> 8 </td> <td> 6 </td> <td> 4 </td> <td> 2 </td> <td> 0 </td> <td> 10</td>
+    </table>
+    {{ formfields }}
+    {{ next_button }}
+{{ endblock }}

@@ -1,0 +1,36 @@
+{{ block title }}
+    Revenue Page
+{{ endblock }}
+{{ block content }}
+<p> Your roll is </p> {{ if player.round_number == 1 }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.1.mp4' }}" type="video/mp4"> </video>
+    {{ elif player.round_number == 2 }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.2.mp4' }}" type="video/mp4"> </video>
+    {{ elif player.round_number == 3 }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.3.mp4' }}" type="video/mp4"> </video>
+    {{ else }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.4.mp4' }}" type="video/mp4"> </video>
+    {{ endif }}
+
+<p>This will be your first roll which represents your company's revenue.<br>
+    You have 1 minute to input your number<br>
+
+    <!-- If you want to change the chart: the top part is spacing and size of the chart,
+tr=row, th=heading, td=data -->
+Remember your payout scheme.</p>
+<table>
+  <tr>
+    <th>Dice Roll </th>
+      <td>1</td> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td>
+      </tr>
+    <tr>
+    <th>Group</th>
+      <td> 1 </td> <td> 2 </td> <td> 3 </td> <td> 4 </td> <td> 5 </td> <td> 0 </td>
+        </tr>
+    </table>
+
+
+    {{ formfields }}
+    {{ next_button }}
+
+{{ endblock }}
