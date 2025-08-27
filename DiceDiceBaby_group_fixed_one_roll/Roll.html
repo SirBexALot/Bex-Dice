@@ -1,0 +1,24 @@
+{{ block title }}
+    Your roll
+{{ endblock }}
+{{ block content }}
+<p>This is the roll you will use for both your revenue and your charity rolls. <br>
+    This page will remain for 30 seconds before automatically moving you to the next page. <br>
+    Please remember your die roll.
+</p>
+<!-- this is where you would change treatments.
+If you want everyone to see the same number, for 1 roll, change player.treatment to player.round_number
+for multiple rounds or erase entirely-->
+<section>
+{{ if player.treatment == 1 }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.1.mp4' }}" type="video/mp4"> </video>
+    {{ elif player.treatment == 2 }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.2.mp4' }}" type="video/mp4"> </video>
+    {{ elif player.treatment == 3 }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.3.mp4' }}" type="video/mp4"> </video>
+    {{ else }}
+    <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.4.mp4' }}" type="video/mp4"> </video>
+    {{ endif }}
+    </section>
+
+{{ endblock }}
