@@ -10,6 +10,14 @@ This page will automatically submit after 3 minutes. If it automatically submits
 You will only be able to submit your number after 2 minutes.<br>
   You will have a chatbox to talk to your groupmates about which number to report <br>
   Remember your payout scheme</p>
+<html> <head> <style>
+table { table-layout:fixed;
+  width: 560px }
+th, td
+  border: 1px solid black;
+  width: 80 px
+}
+</style> </head> <body>
 <table>
   <tr>
     <th>Dice Roll </th>
@@ -22,7 +30,7 @@ You will only be able to submit your number after 2 minutes.<br>
     </table>
 
 {{ chat }}
-<!--<div id="delayed_field" style="display: none;">
+<div id="delayed_field" style="display: none;">
     {{ formfields }}
     {{ next_button }}
 </div>
@@ -32,8 +40,7 @@ You will only be able to submit your number after 2 minutes.<br>
             document.getElementById('delayed_field').style.display = 'block';
         }, 120000)
     })
-</script>-->
+</script>
 <!--This will change how long the buttons are hidden for -->
-{{ formfields }}
-{{ next_button }}
+
 {{ endblock }}

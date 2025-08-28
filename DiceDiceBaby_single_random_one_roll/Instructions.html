@@ -11,9 +11,19 @@ Dice Dice Baby
       button.style.visibility = "visible";
    });
 </script>
+<!-- all of the amount makes the next button hidden until the audio is played.
+When you replace the audio, just replace it with the same name in the same spot and it'll work -->
 <p>In this experiment, you will see one dice roll which you must report on 2 subsequent pages. <br>
     The first page will represent you company's income <br>
     The payouts are as follows: </p>
+<html> <head> <style>
+table { table-layout:fixed;
+  width: 560px }
+th, td
+  border: 1px solid black;
+  width: 80 px
+}
+</style> </head> <body> <!-- the above sets the tab;e spacing -->
     <table>
   <tr>
     <th>Dice Roll 1</th> <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td> </tr>
@@ -62,5 +72,7 @@ th, td
      it won't take super long even with waiting and is probably better to leave it -->
 Your real life payout will be in a ratio of ??? points = $1 CAD</p>
 <button class="otree-btn-next5 btn btn-primary" id="Next" style="visibility: hidden;">Next</button>
-{{ next_button }}
+
+<!-- This will hide a next button until the audio plays -->
+
 {{ endblock }}

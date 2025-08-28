@@ -3,12 +3,12 @@
 {{ endblock }}
 {{ block content }}
 <p>This is the roll you will use for both your revenue and your charity rolls. <br>
-    This page will remain for 30 seconds before automatically moving you to the next page. <br>
+    This page will remain for 10 seconds before automatically moving you to the next page. <br>
     Please remember your die roll.
 </p>
 <!-- this is where you would change treatments.
 If you want everyone to see the same number, for 1 roll, change player.treatment to player.round_number
-for multiple rounds or erase entirely-->
+for multiple rounds or erase entirely. You can use an and statement for multiple treatments and rounds-->
 <section>
 {{ if player.treatment == 1 }}
     <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.1.mp4' }}" type="video/mp4"> </video>

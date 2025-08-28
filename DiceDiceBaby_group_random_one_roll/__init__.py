@@ -9,8 +9,9 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'DiceDiceBaby_group_random_one_roll'
     PLAYERS_PER_GROUP = 3
-    NUM_ROUNDS = 1
-    show_up = 0
+    NUM_ROUNDS = 2
+    show_up = 0 #Change the 0 if you want to have a show up payment
+    #options = [2, 4, 6] #This will be if you want to have a random number from a non-sequential set
 
 
 class Subsession(BaseSubsession):
@@ -26,8 +27,8 @@ class Player(BasePlayer):
     chosen_num = models.IntegerField(label="What is the revenue number?", min=1, max=6)
     #If you change to "tax" instead of "charity" you can just change the green text, players can't see the variable name
     charity_num = models.IntegerField(label="What is the charity number?", min=1, max=6)
-    first_num = models.IntegerField()
-    second_num = models.IntegerField()
+    first_num = models.CurrencyField()
+    second_num = models.CurrencyField()
     charity = models.IntegerField()
     total_charity = models.CurrencyField()
 #This is all the demographic questions for the Post experiment survey
@@ -43,6 +44,9 @@ class Player(BasePlayer):
 def creating_session(session):
     for groups in session.get_groups():
         groups.dice_roll = random.randint(1, 6)
+        #group.dice_roll = random.choice(C.options)
+        #If you want to have a random choice from fewer options, choose them in the constants class
+        #The use the random.choice one here. I haven't tested it, but its the same principal as one I did test
 
 # PAGES
 class Instructions(Page):
@@ -54,8 +58,8 @@ class WaitingPage(WaitPage):
     pass
 
 class RollWithIt(Page):
-    timeout_seconds = 30 #This is how long to see the page for
-    #I put 30 seconds for fun, you can change it. There is no "next" button so people can't skip the page
+    timeout_seconds = 10 #This is how long to see the page for
+    #I put 10 seconds for fun, you can change it. There is no "next" button so people can't skip the page
 
     #This will display the dice roll based on how the files are currently named.
     #If you change the names of the videos, you need to change the green text part and keep a number in the title.
@@ -100,7 +104,7 @@ class RevWaitPage(WaitPage):
                     p.first_num = p.chosen_num
             else:
                 p.first_num = 0
-
+#If you go to charity first, move the payoffs section here.
 class CharityPage(Page):
     timeout_seconds = 180 #change this is you want the page to be available for a different amount of time
 
@@ -132,11 +136,11 @@ class CharityWaitPage(WaitPage):
                     p.second_num = 0
                 else:
                     p.second_num = p.charity_num*2
-                    p.charity = 10-p.charty_num*2
+                    p.charity = 10-p.charity_num*2
             else:
                 p.second_num = 0
                 p.charity = 10
-
+#This is the payoff section
         for p in group.get_players():
             if p.round_number == 1:
                 p.payoff = p.first_num + p.second_num + C.show_up
@@ -145,7 +149,7 @@ class CharityWaitPage(WaitPage):
                 p.payoff = p.first_num + p.second_num
                 previous_total = p.in_round(p.round_number-1).total_charity
                 p.total_charity = previous_total + p.charity
-
+#If you move to charity first, move this to the rev wait page
 class Results(Page):
     @staticmethod
     def is_displayed(player):
@@ -158,6 +162,8 @@ class PostSurvey(Page):
 
     form_model = 'player'
     form_fields = ['Age', 'Gender', 'School', 'Work_actual', "Work_hypo"]
+    #If you want to change they demographic questions change them here,
+    # if you want to put it in another app, remove it from the page sequence.
 
 #Revenue page first
 page_sequence = [Instructions, WaitingPage, RollWithIt, WaitingPage, RevPage, RevWaitPage, CharityPage, CharityWaitPage, Results, PostSurvey]

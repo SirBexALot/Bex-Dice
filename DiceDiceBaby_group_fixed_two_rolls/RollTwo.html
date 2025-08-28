@@ -7,6 +7,7 @@
     {{ else }}
     <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.2.mp4' }}" type="video/mp4"> </video>
     {{ endif }}
+<!-- If you want to do multiple rounds you need to add an AND statement above or nested if statements-->
 <p>This will be your second roll which represents the amount you will split with charity.<br>
 You will not be able to input a number for the first 2 minutes, discuss with your groupmates your choice. <br>
     You only get one try to submit your numbers, if they do not match you will receive 0<br>
@@ -21,7 +22,7 @@ shorter or longer.-->
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             document.getElementById('delayed_field').style.display = 'block';
-        }, 5000)
+        }, 120000)
     })
 </script>
 
@@ -36,7 +37,6 @@ table {
   width: 560px
 }
 th, td
-  border: 1px solid black;
   width: 80 px
 }
 
@@ -50,10 +50,10 @@ th, td
       </tr>
     <tr>
     <th>Group</th>
-      <td>1000</td> <td>800</td> <td>600</td> <td>400</td> <td>200</td> <td>0</td>
+      <td>2</td> <td>4</td> <td>6</td> <td>8</td> <td>10</td> <td>0</td>
         </tr>
     <th>Charity</th>
-      <td>0</td> <td>200</td> <td>400</td> <td>600</td> <td>800</td> <td>1000</td>
+      <td>8</td> <td>6</td> <td>4</td> <td>2</td> <td>0</td> <td>10</td>
     </table>
 
 

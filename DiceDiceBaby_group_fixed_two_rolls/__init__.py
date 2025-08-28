@@ -11,15 +11,13 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'DiceDiceBaby_group_fixed_two_rolls'
     PLAYERS_PER_GROUP = 3
-    NUM_ROUNDS = 2
+    NUM_ROUNDS = 1
     show_up = 0 #Your show-up payment if you want one
 
 class Subsession(BaseSubsession):
     pass
 
 class Group(BaseGroup):
-    #These are all the numbers that are the same for the whole group.
-    #For a single player these become player variables
     dice_roll_1 = models.IntegerField()
     dice_roll_2 = models.IntegerField()
     #these are unneeded (also note these become the sum of the player variables so they have an s at the end)
@@ -30,8 +28,8 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     treatment = models.IntegerField()
-    chosen_num = models.CurrencyField(label="The income value selected is: ", min=1, max=6)
-    charity_num = models.CurrencyField(label="The charity value selected is: ", min=1, max=6)
+    chosen_num = models.IntegerField(label="The income value selected is: ", min=1, max=6)
+    charity_num = models.IntegerField(label="The charity value selected is: ", min=1, max=6)
     first_num = models.CurrencyField()
     second_num = models.CurrencyField()
     total_charity = models.CurrencyField(initial = 0)
@@ -65,8 +63,6 @@ def creating_session(session):
             group.treatment = group_in_round1.treatment
             for player in group.get_players():
                 player.treatment = player.in_round(1).treatment
-
-
 
 # PAGES
 class Instructions(Page):
@@ -110,7 +106,7 @@ class WaitPageRev(WaitPage):
                     p.first_num = p.chosen_num
             else:
                 p.first_num = 0
-
+#If you go charity first, put the payoffs here
 class RollTwo(Page):
     form_model = 'player'
     form_fields = ['charity_num']
@@ -144,7 +140,7 @@ class WaitPageChar(WaitPage):
             else:
                 p.second_num = p.charity_num*2
                 p.charity = 10 - p.charity_num*2
-
+#This is the payoffs section
         for p in group.get_players():
             if p.round_number == 1:
                 p.payoff = p.first_num + p.second_num + C.show_up
@@ -153,8 +149,7 @@ class WaitPageChar(WaitPage):
                 p.payoff = p.first_num + p.second_num
                 previous_total = p.in_round(p.round_number-1).total_charity
                 p.total_charity = previous_total + p.charity
-
-
+#If you go charity first, move the payoffs to the rev wait page
 class Results(Page):
     @staticmethod
     def is_displayed(player):
@@ -167,6 +162,7 @@ class PostSurvey(Page):
 
     form_model = 'player'
     form_fields = ['Age', 'Gender', 'School', 'Work_hypo', 'Work_actual' ]
+#You can change post survey questions here, if you want to get rid of it, erase it from the page sequence
 
 # Page sequence for REVENUE first
 page_sequence = [Instructions, WaitPageIns, RollOne, WaitPageRev, RollTwo, WaitPageChar, Results, PostSurvey]

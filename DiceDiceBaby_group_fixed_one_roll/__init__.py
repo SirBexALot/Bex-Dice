@@ -10,7 +10,7 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'DiceDiceBaby_group_fixed_one_roll'
     PLAYERS_PER_GROUP = 3 #none means no groups (each player plays individually)
-    NUM_ROUNDS = 2 #This is where you change the number of rounds. If you have more than 1 round, you need to change the if statement on the roll page
+    NUM_ROUNDS = 1 #This is where you change the number of rounds. If you have more than 1 round, you need to change the if statement on the roll page
     show_up = 0  #This would be show up fee, it's already set up to only add once
 
 class Subsession(BaseSubsession):
@@ -64,6 +64,7 @@ def creating_session(session):
         #this part keeps the same treatments for the groups in each round.
         #If you want them different then you can remove the whole if statement
         #if you're copying this to another app to make changes, you need to import itertools up top
+        #This is only set up for one round. If you want multiple rounds you need to change the roll page
 
 
 # PAGES

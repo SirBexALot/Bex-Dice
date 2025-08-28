@@ -12,6 +12,7 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 2
     show_up = 0 #This is where you can add a show up fee
+    #options = [3, 4, 5] #This is where you would use specific numbers you want to randomize
 
 class Subsession(BaseSubsession):
     pass
@@ -40,7 +41,10 @@ class Player(BasePlayer):
 #FUNCTIONS
 def creating_session(subsession):
     for p in subsession.get_players():
-        p.roll = random.randint(1,6)
+        p.roll = random.randint(1,6) #this shows a random integer. If you want to have it from a set of numbers, you need to add your options in constants
+        #YOu then need to change p.roll = random.randomint to
+        #p.roll = random.choice(C.options)
+        #it works, I just tested it.
 
 # PAGES
 class Instructions(Page):
@@ -59,9 +63,10 @@ class Roll(Page):
         return{
             'video_filename': video_filename
         }
-
+#When you replace the videos, replace them with the same name or this won't work (as in it's set up to be Dice.#.
+#Changing the names means changing the code
 class RevPage(Page):
-    timeout_seconds = 60
+    timeout_seconds = 60 #will automatically move people forward after 60 seconds. If you change the time, change the instructions
 
     form_model = 'player'
     form_fields = ['rev_num']
@@ -69,6 +74,7 @@ class RevPage(Page):
     def before_next_page(player, timeout_happened):
         if timeout_happened:
             player.rev_num = 6
+            #for payouts, 6=0, if you change the payouts, change this. It means if people get timedout, the get 0.
 
 class RevWait(WaitPage):
     @staticmethod
@@ -78,6 +84,8 @@ class RevWait(WaitPage):
                 p.rev_earn = 0
             else:
                 p.rev_earn = p.rev_num
+
+                #If you move to charity first, you need to move the payoffs section here
 
 class CharityPage(Page):
     timeout_seconds = 60
@@ -100,7 +108,7 @@ class CharityWait(WaitPage):
             else:
                 p.charity_earn = p.charity_num*2
                 p.donation = 10 - p.charity_num*2
-
+#This is the payoffs section
         for p in players:
             if p.round_number == 1:
                 p.payoff = C.show_up + p.charity_earn + p.rev_earn
@@ -109,7 +117,7 @@ class CharityWait(WaitPage):
                 p.payoff = p.charity_earn + p.rev_earn
                 previous_donation = p.in_round(p.round_number-1).total_donation
                 p.total_donation = previous_donation + p.donation
-
+#Move to the rev page if you move to charity first
 class Results(Page):
     @staticmethod
     def is_displayed(player):
@@ -121,7 +129,8 @@ class PostSurvey(Page):
         return player.round_number == C.NUM_ROUNDS
 
     form_model = 'player'
-    form_fields = ['Age', 'Gender', 'School', 'Work_actual', "Work_hypo"]
+    form_fields = ['Age', 'Gender', 'School', 'Work_actual', "Work_hypo"] #change here and on PostSurvey page if you change these
+    #If you remove the post survey here and have it as a separate app, you can erase it from the page sequence
 
 #Rev first
 page_sequence = [Instructions, WaitForIt, Roll, RevPage, RevWait, CharityPage, CharityWait, Results, PostSurvey]

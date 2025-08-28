@@ -4,6 +4,7 @@ Charity Page
 {{ endblock }}
 
 {{ block content}}
+<!-- you can add as many rounds as you like and chose the roll here -->
 <p>Your roll is:
   {{ if player.round_number == 1 }}
     <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.1.mp4' }}" type="video/mp4"> </video>
@@ -14,10 +15,18 @@ Charity Page
     {{ else }}
     <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.4.mp4' }}" type="video/mp4"> </video>
     {{ endif }} <br>
-  This is your second roll which represents the amount you will share with charity. <br>
+  This represents the amount you will share with charity. <br>
 This page will automatically submit after 1 minute. If it automatically submits you receive 0. <br>
     Remember your payout scheme </p>
-</script>
+<html> <head> <style>
+table { table-layout:fixed;
+  width: 560px }
+th, td
+  border: 1px solid black;
+  width: 80 px
+}
+</style> </head> <body>
+<!-- the above sets the table below to a fixed width. You can change it -->
 <table>
   <tr>
     <th>Dice Roll </th>

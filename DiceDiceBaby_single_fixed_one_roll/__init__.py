@@ -10,7 +10,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'DiceDiceBaby_single_fixed_one_roll'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 2
-    endowment = 0
+    endowment = 0 #If you want a show-up payment, put it here
 
 class Subsession(BaseSubsession):
     pass
@@ -21,7 +21,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    rev_num = models.IntegerField(label= "PLease enter the number you wish to report for your revenue", min=1, max=6)
+    rev_num = models.IntegerField(label= "Please enter the number you wish to report for your revenue", min=1, max=6)
     charity_num = models.IntegerField(label="Please enter the number you wish to report for your charity payment", min=1, max=6)
     rev_earn = models.CurrencyField()
     charity_earn = models.CurrencyField()
@@ -43,7 +43,7 @@ class Instructions(Page):
         return player.round_number == 1
 
 class Roll(Page):
-    timeout_seconds = 5
+    timeout_seconds = 10 #You can change how long the roll is shown for here
 
 class CharityPage(Page):
     timeout_seconds = 60
@@ -63,7 +63,8 @@ class RevPage(Page):
 
     def before_next_page(player, timeout_happened):
         if timeout_happened:
-            player.rev_num = 6
+            player.rev_num = 6 #If you change the payout scheme, put whatever 0 is here.
+    #if you change to charity first, put the payoff section here
 
 class RevWait(WaitPage):
     @staticmethod
@@ -85,16 +86,16 @@ class CharityWait(WaitPage):
             else:
                 p.charity_earn = p.charity_num * 2
                 p.donation = 10 - p.charity_num*2
-
+#This is the payoff section
         for p in players:
             if p.round_number == 1:
                 p.payoff = C.endowment + p.charity_earn + p.rev_earn
-                p.donation_total = p.donation
+                p.total_donation = p.donation
             else:
                 p.payoff = p.charity_earn + p.rev_earn
                 previous_donation = p.in_round(p.round_number-1).total_donation
                 p.total_donation = previous_donation + p.donation
-
+#If you change to charity first, move it to the rev page
 class Results(Page):
     @staticmethod
     def is_displayed(player):
@@ -107,7 +108,8 @@ class PostSurvey(Page):
 
     form_model = 'player'
     form_fields = ['Age', 'Gender', 'School', 'Work_hypo', 'Work_actual']
-
+#You can add or remove survey questions here and on the PostSurvey HTML page.
+#If you remove it entirely, erase it from the page sequence
 class Waiting(WaitPage):
     pass
 

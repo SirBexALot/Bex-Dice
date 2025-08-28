@@ -10,7 +10,7 @@ Dice Dice Baby
       const button = document.getElementById("Next");
       button.style.visibility = "visible";
    });
-</script>
+</script> <!-- this is what hides th next button until the audio is played -->
 <p>In this experiment, you will see one dice roll which you must report on 2 subsequent pages. <br>
     The first page will represent you company's income <br>
     The payouts are as follows: </p>
@@ -23,21 +23,14 @@ Dice Dice Baby
 
 <p>The second page will represent an additional amount split between you and a charity<br>
 The payouts for the second roll are as follows:</p>
-<html>
-<head>
-<style>
+<html> <head> <style>
 table {
   table-layout:fixed;
-  width: 560px
-}
-th, td
-  border: 1px solid black;
-  width: 80 px
-}
+  width: 560px }
+th, td {
 
-</style>
-</head>
-<body>
+  width: 80 px }
+</style> </head>  <body>
 
 <table>
   <tr>
@@ -62,5 +55,5 @@ th, td
      it won't take super long even with waiting and is probably better to leave it -->
 Your real life payout will be in a ratio of ??? points = $1 CAD</p>
 <button class="otree-btn-next5 btn btn-primary" id="Next" style="visibility: hidden;">Next</button>
-{{ next_button }}
+<!-- and this. put this part where you want your next button-->
 {{ endblock }}

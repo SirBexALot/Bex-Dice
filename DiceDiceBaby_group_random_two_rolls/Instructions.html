@@ -2,13 +2,23 @@
 Dice Dice Baby
 {{ endblock }}
 {{ block content }}
+<p>Please play the following audio recording of the instructions to move forward.</p>
+<audio controls> <source src="{{ static 'Instructions.m4a' }}"></audio>
+<!-- keep the same name for the instructions and you can just replace the static file with the real ones -->
+<script>
+   const audio = document.querySelector('audio');
+   audio.addEventListener('ended', (event) => {
+      const button = document.getElementById("Next");
+      button.style.visibility = "visible";
+   });
+</script>
 <p>In this experiment, you will be seeing 2 random dice rolls. <br>
     The first will represent you company's income <br>
     The payouts are as follows: </p>
     <table>
   <tr>
     <th>Dice Roll 1</th> <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td> </tr>
-    <tr><th>Payout</th><td>100</td><td>200</td><td>300</td><td>400</td><td>500</td><td>600</td>
+    <tr><th>Payout</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
   </tr>
     </table>
 
@@ -37,10 +47,10 @@ th, td
       </tr>
     <tr>
     <th>Group</th>
-      <td>1000</td> <td>800</td> <td>600</td> <td>400</td> <td>200</td> <td>0</td>
+      <td>2</td> <td>4</td> <td>6</td> <td>8</td> <td>10</td> <td>0</td>
         </tr>
     <th>Charity</th>
-      <td>0</td> <td>200</td> <td>400</td> <td>600</td> <td>800</td> <td>1000</td>
+      <td>8</td> <td>6</td> <td>4</td> <td>2</td> <td>0</td> <td>10</td>
     </table>
 <p>All players much submit the same number to receive the payout for that round, a disagreement will result in a payoff of 0. <br>
 All players must submit their response within 3 minutes, failure to submit will result in a payoff of 0. <br>
@@ -48,7 +58,6 @@ You are paid based on the number you submit, no checks will take place during th
     There is a chat box to help the group decide on the submission.<br>
     You will not be able to submit your answers for the first 2 minutes. <br>
 Your real life payout will be in a ratio of ??? points = $1 CAD</p>
-
-    {{ next_button }}
+<button class="otree-btn-next5 btn btn-primary" id="Next" style="visibility: hidden;">Next</button>
 
 {{ endblock }}

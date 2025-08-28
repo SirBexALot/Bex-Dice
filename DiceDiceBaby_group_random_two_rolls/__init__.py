@@ -12,9 +12,8 @@ class C(BaseConstants):
     NAME_IN_URL = 'DiceDiceBaby_group_random_two_rolls'
     PLAYERS_PER_GROUP = 3
     NUM_ROUNDS = 2
-    show_up = 0
-    #if you want any show up amount, change the 0
-
+    show_up = 0 #if you want any show up amount, change the 0
+    #options = [2, 3, 4]
 
 class Subsession(BaseSubsession):
     pass
@@ -22,13 +21,13 @@ class Subsession(BaseSubsession):
 class Player(BasePlayer):
     #otree likes currency fields for payoffs. If you want to change it to dollars instead of points
     #you need to go to settings and change use_points to "False"
-    chosen_num = models.CurrencyField(label="The income value selected is: ", min=1, max=6)
-    charity_num = models.CurrencyField(label="The charity value selected is: ", min=1, max=6)
+    chosen_num = models.IntegerField(label="The income value selected is: ", min=1, max=6)
+    charity_num = models.IntegerField(label="The charity value selected is: ", min=1, max=6)
     first_num = models.CurrencyField()
     second_num = models.CurrencyField()
     charity_pay = models.CurrencyField()
     charity = models.IntegerField()
-    charity_total = models.CurrencyField()
+    total_charity = models.CurrencyField()
     #This is all the PostSurvey questions. You can adjust the choices here, but if you want to change
     #the choices you need to change them here, in the PostSurvey page section and on the html page
     Age = models.IntegerField(label="Please choose your age range:", choices= [[1,'>18'], [2, '18-25'], [3, '25-35'], [4, '35-45'], [5, '45<'],])
@@ -47,9 +46,13 @@ class Group(BaseGroup):
 def creating_session(session):
     for groups in session.get_groups():
         groups.dice_roll_1 = random.randint(1, 6)
+        #groups.die_roll_1 = random.choice(C.options)
 
     for groups in session.get_groups():
         groups.dice_roll_2 = random.randint(1, 6)
+        #groups.die_roll_2 = random.choice(C.options)
+        #Didn't test this, but it should work since its the same principal as the single player version I did test.
+        #I'm just running out of time!
 
 # PAGES
 class Instructions(Page):
@@ -99,7 +102,7 @@ class WaitPageOne(WaitPage):
         p1_chosen_num = players[0].chosen_num
         p2_chosen_num = players[1].chosen_num
         p3_chosen_num = players[2].chosen_num
-
+#For the groups you need to set a groupwide variable for each of the players choices before you can compare them.
         if p1_chosen_num == p2_chosen_num and p2_chosen_num == p3_chosen_num:
             group.match = True
         else:
@@ -114,7 +117,7 @@ class WaitPageOne(WaitPage):
                     p.first_num = p.chosen_num
             else:
                 p.first_num = 0
-
+#This just basically says if they match and are 6, or they don't match players get 0, otherwise they get what they chose
 class WaitPageTwo(WaitPage):
     @staticmethod
     def after_all_players_arrive(group: Group):
@@ -138,7 +141,7 @@ class WaitPageTwo(WaitPage):
                     p.charity = 10-(p.charity_num*2)
             else:
                 p.second_num = 0
-
+#This is the payoffs section
         for p in group.get_players():
             if p.round_number == 1:
                 p.payoff = p.first_num + p.second_num + C.show_up
@@ -147,7 +150,7 @@ class WaitPageTwo(WaitPage):
                 p.payoff = p.first_num + p.second_num
                 previous_total = p.in_round(p.round_number-1).total_charity
                 p.total_charity = previous_total + p.charity
-
+#If you move charity first, you need to move this to the rev wait page
 
 class Results(Page):
     @staticmethod

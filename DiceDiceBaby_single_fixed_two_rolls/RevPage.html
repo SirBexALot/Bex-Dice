@@ -1,7 +1,7 @@
 {{ block title }}
     Revenue Page
 {{ endblock }}
-{{ block content }}
+{{ block content }} <!-- change your fixed roll numbers here. You can add more round numbers if you want -->
 <p> Your roll is </p> {{ if player.round_number == 1 }}
     <video width="100" height="100" controls muted autoplay> <source src="{{ static 'Dice.1.mp4' }}" type="video/mp4"> </video>
     {{ elif player.round_number == 2 }}
@@ -18,6 +18,15 @@
     <!-- If you want to change the chart: the top part is spacing and size of the chart,
 tr=row, th=heading, td=data -->
 Remember your payout scheme.</p>
+<html> <head> <style>
+table { table-layout:fixed;
+  width: 560px }
+th, td
+  border: 1px solid black;
+  width: 80 px
+}
+</style> </head> <body>
+<!-- the above sets the width of the table below -->
 <table>
   <tr>
     <th>Dice Roll </th>
